@@ -1,6 +1,6 @@
 import arcade
 import Entities.Player
-from universalVariables import *
+from settings.universalVariables import *
 
 class GameView(arcade.Window):
     def __init__(self):

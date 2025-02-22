@@ -1,6 +1,6 @@
 import Entities.Entity
 #import arcade
-from universalVariables import *
+from settings.universalVariables import *
 
 class Player(Entities.Entity.Entity):
     def __init__(self, x, y, name, sprites=[], SPRITE_SCALE = 1):
