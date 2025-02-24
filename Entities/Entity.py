@@ -49,6 +49,10 @@ class Entity:
         self.activeSprite.change_x = dx
         self.activeSprite.change_y = dy
 
+    def setPos(self, x, y):
+        self.activeSprite.center_x = x
+        self.activeSprite.center_y = y
+
     def getPos(self):
         return self.activeSprite.position
     

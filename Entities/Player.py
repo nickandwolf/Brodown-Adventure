@@ -4,7 +4,7 @@ from settings.universalVariables import *
 
 class Player(Entities.Entity.Entity):
     def __init__(self, x, y, name, sprites=[], SPRITE_SCALE = 1):
-        super().__init__(x, y, name, "This is the player", 2, SPRITE_SCALE, sprites)
+        super().__init__(x, y, name, "This is the player", 3, SPRITE_SCALE, sprites)
 
         self.move_up = False
         self.move_down = False
