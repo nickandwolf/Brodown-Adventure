@@ -58,10 +58,10 @@ class Player(Entities.Entity.Entity):
         super().update(delta)
         if self.activeSprite.left < 0:
             self.activeSprite.left = 0
-        elif self.activeSprite.right > WINDOW_WIDTH-1:
-            self.activeSprite.right = WINDOW_WIDTH-1
+        elif self.activeSprite.right > GAME_WIDTH-1:
+            self.activeSprite.right = GAME_WIDTH-1
         
         if self.activeSprite.bottom < 0:
             self.activeSprite.bottom = 0
-        elif self.activeSprite.top > WINDOW_HEIGHT-1:
-            self.activeSprite.top = WINDOW_HEIGHT-1
+        elif self.activeSprite.top > GAME_HEIGHT-1:
+            self.activeSprite.top = GAME_HEIGHT-1

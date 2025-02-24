@@ -1,4 +1,5 @@
 import arcade
+from settings.universalVariables import *
 
 class Entity:
     def __init__(self, x, y, name, description="", MOVEMENT_SPEED = 1, SPRITE_SCALE = [5,5], sprites=[], ANIMATION_SPEED = 1, action=None):
@@ -25,7 +26,7 @@ class Entity:
 
     def getCollisionList(self, other):
         return arcade.check_for_collision_with_list(self.activeSprite, other)
-    
+
     def getCollision(self, other):#TODO: probably not needed
         hits = arcade.check_for_collision_with_list(self.activeSprite, other)
         if len(hits) > 0:
@@ -64,7 +65,7 @@ class Entity:
         return self.activeSprite.center_y
 
     def draw(self):
-        arcade.draw_sprite(self.activeSprite)
+        arcade.draw_sprite(self.activeSprite, pixelated=True)
 
     def update(self, delta):
         self.timer += delta
