@@ -1,5 +1,5 @@
 import Entities.Entity
-#import arcade
+import arcade
 from settings.universalVariables import *
 
 class Player(Entities.Entity.Entity):
