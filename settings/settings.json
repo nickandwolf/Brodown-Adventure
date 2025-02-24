@@ -2,7 +2,8 @@
     "window": {
         "fullscreen": false,
         "width": 800,
-        "height": 600
+        "height": 600,
+        "fps": 60
     },
 
     "keybindings": {
@@ -11,5 +12,11 @@
         "move_down": 115,
         "move_left": 97,
         "move_right": 100
+    },
+
+    "sound": {
+        "music_volume": 1.0,
+        "sound_volume": 1.0
     }
+
 }

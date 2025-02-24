@@ -3,9 +3,11 @@ import Entities.Entity
 from settings.universalVariables import *
 
 class Player(Entities.Entity.Entity):
-    def __init__(self, x, y, name, sprites=[], SPRITE_SCALE = 1):
+    def __init__(self, x, y, name="Player", sprites=[arcade.load_texture("./Graphics/player1.png"),
+                arcade.load_texture("./Graphics/player2.png")], SPRITE_SCALE = [5,5]):
         super().__init__(x, y, name, "This is the player", 3, SPRITE_SCALE, sprites)
 
+        self.ANIMATION_SPEED = 0.63157
         self.move_up = False
         self.move_down = False
         self.move_left = False
@@ -53,6 +55,7 @@ class Player(Entities.Entity.Entity):
             self.move()
 
     def update(self, delta):
+        super().update(delta)
         if self.activeSprite.left < 0:
             self.activeSprite.left = 0
         elif self.activeSprite.right > WINDOW_WIDTH-1:

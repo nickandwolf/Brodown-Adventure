@@ -2,15 +2,17 @@ import arcade
 import Entities.Player
 from settings.universalVariables import *
 from arcade.types import LRBT
+from AudioHandler import *
 
 class GameWindow(arcade.Window):
     def __init__(self):
-        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, WINDOW_FULLSCREEN)
+        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, WINDOW_FULLSCREEN, draw_rate=WINDOW_FPS)
         self.center_window()
         self.camera = arcade.camera.Camera2D(position=(0, 0),
             projection=LRBT(left=0, right=WINDOW_WIDTH, bottom=0, top=WINDOW_HEIGHT),
             viewport=self.rect)
         self.camera.use()
+
 
     def on_key_press(self, key, modifiers):
         if key == key_bindings["fullscreen"]:
@@ -27,7 +29,8 @@ class IntroStoryScreen(arcade.View):
         self.pointer = 0
         self.window.background_color = arcade.csscolor.BLACK
         
-        self.music_player = arcade.Sound("./Music/Intro.wav", True).play()
+        self.song = arcade.Sound("./Music/Intro.wav", True)
+        self.music_player = self.song.play(MUSIC_VOLUME)
 
         self.screen0()
         
@@ -122,7 +125,8 @@ class TitleScreen(arcade.View):
                                 color=arcade.color.WHITE, font_size=20,
                                 anchor_x="center")
         
-        self.music_player = arcade.Sound("./Music/Title.mp3", True).play()
+        self.song = arcade.Sound("./Music/Title.mp3", True)
+        self.music_player = self.song.play(MUSIC_VOLUME)
 
     def on_draw(self):
         self.clear()
@@ -143,15 +147,13 @@ class GameView(arcade.View):
     def __init__(self, playerX = 0, playerY = 0):
         """ We only need to set where the player enters the screen by default. """
         super().__init__()
-        self.Player = Entities.Player.Player(playerX, playerY, "Player", [arcade.load_texture(":resources:/images/enemies/slimeBlock.png")])
+        self.Player = Entities.Player.Player(playerX, playerY)
         self.physics_engine = arcade.PhysicsEngineSimple(self.Player.activeSprite)
         arcade.set_background_color(arcade.color.CORNFLOWER_BLUE)
 
-        self.music_player = arcade.Sound("./Music/Level1.mp3", streaming=True).play()
-        self.music_player.loop = True
-
-    def setup(self):
-        pass
+        self.audio = AudioHandler([arcade.Sound("./Music/Level1.mp3")])
+        self.audio.setLoop(0, True)
+        self.audio.playMusic(0)
 
     def on_draw(self):
         self.clear()
@@ -166,11 +168,13 @@ class GameView(arcade.View):
         self.Player.handleKeyPress(key, modifiers)
 
     def on_key_release(self, key, modifiers):
+        if key == arcade.key.SPACE:
+            self.audio.pauseMusic()
         self.Player.handleKeyRelease(key, modifiers)
 
 def main():
     window = GameWindow()
-    window.show_view(IntroStoryScreen())
+    window.show_view(GameView())
     arcade.run()
 
 if __name__ == "__main__":

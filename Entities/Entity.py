@@ -1,16 +1,17 @@
 import arcade
 
 class Entity:
-    def __init__(self, x, y, name, description="", MOVEMENT_SPEED = 1, SPRITE_SCALE = 1, sprites=[], action=None):
-        self.x = x
-        self.y = y
-        self.spriteList = arcade.SpriteList()
+    def __init__(self, x, y, name, description="", MOVEMENT_SPEED = 1, SPRITE_SCALE = [5,5], sprites=[], ANIMATION_SPEED = 1, action=None):
+        self.spriteList = []
 
         self.SPRITE_SCALE = SPRITE_SCALE
         self.MOVEMENT_SPEED = MOVEMENT_SPEED
 
-        for x in sprites:
-            self.spriteList.append(arcade.Sprite(x, self.SPRITE_SCALE))
+        self.timer = 0
+        self.animationFrame = 0
+        self.ANIMATION_SPEED = ANIMATION_SPEED
+        
+        self.spriteList = sprites
 
         self.name = name
         self.description = description
@@ -18,15 +19,15 @@ class Entity:
 
         self.activeSprite = 0
         if len(self.spriteList) > 0:
-            self.activeSprite = self.spriteList[0]
-            self.activeSprite.center_x = self.x
-            self.activeSprite.center_y = self.y
+            self.activeSprite = arcade.Sprite(self.spriteList[0], self.SPRITE_SCALE)
+            self.activeSprite.center_x = x
+            self.activeSprite.center_y = y
 
     def getCollisionList(self, other):
-        return arcade.check_for_collision_with_list(self.spriteList, other)
+        return arcade.check_for_collision_with_list(self.activeSprite, other)
     
     def getCollision(self, other):#TODO: probably not needed
-        hits = arcade.check_for_collision_with_list(self.spriteList, other)
+        hits = arcade.check_for_collision_with_list(self.activeSprite, other)
         if len(hits) > 0:
             return True
         return False
@@ -66,4 +67,15 @@ class Entity:
         arcade.draw_sprite(self.activeSprite)
 
     def update(self, delta):
-        self.spriteList.update(delta)
+        self.timer += delta
+        if self.timer > self.ANIMATION_SPEED:
+            oldX = self.activeSprite.center_x
+            oldY = self.activeSprite.center_y
+            self.animationFrame += 1
+            if self.animationFrame >= len(self.spriteList):
+                self.animationFrame = 0
+            self.activeSprite.texture = self.spriteList[self.animationFrame]
+            self.timer = 0
+        
+        self.activeSprite.update(delta)
+
