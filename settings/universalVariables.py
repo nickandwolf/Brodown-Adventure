@@ -18,4 +18,3 @@ MUSIC_VOLUME = settings_data["sound"]["music_volume"]
 SOUND_VOLUME = settings_data["sound"]["sound_volume"]
 
 key_bindings = settings_data["keybindings"]
-    

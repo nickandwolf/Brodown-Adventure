@@ -1,17 +1,24 @@
 import Entities.Entity
-import arcade
 from settings.universalVariables import *
+from arcade.types import LRBT
 
 class Player(Entities.Entity.Entity):
-    def __init__(self, x, y, name="Player", sprites=[arcade.load_texture("./Graphics/player1.png"),
-                arcade.load_texture("./Graphics/player2.png")], SPRITE_SCALE = [5,5]):
-        super().__init__(x, y, name, "This is the player", 3, SPRITE_SCALE, sprites)
+    def __init__(self, x, y, name="Player", sprites=["./Graphics/basictiles.png"], SPRITE_SCALE = [5,5], inventory = []):
+        super().__init__(x, y, name, "This is the player", 3, SPRITE_SCALE, sprites, sprite_sheet=True)
 
         self.ANIMATION_SPEED = 0.63157
         self.move_up = False
         self.move_down = False
         self.move_left = False
         self.move_right = False
+
+        self.inventory = []
+
+        # 0 = up
+        # 1 = right
+        # 2 = down
+        # 3 = left
+        self.rotation = 0
 
     def move(self):
         self.activeSprite.change_x = 0
@@ -39,6 +46,16 @@ class Player(Entities.Entity.Entity):
         elif key == key_bindings["move_right"]:
             self.move_right = True
             self.move()
+        elif key == key_bindings["rotate_left"]:
+            self.rotation -= 1
+            if rotation < 0:
+                rotation = 3
+
+        elif key == key_bindings["rotate_right"]:
+            self.rotation += 1
+            if rotation > 3:
+                rotation = 0
+
 
     def handleKeyRelease(self, key, modifiers):
         if key == key_bindings["move_up"]:

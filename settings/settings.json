@@ -1,8 +1,8 @@
 {
     "window": {
         "fullscreen": false,
-        "width": 1280,
-        "height": 720,
+        "width": 800,
+        "height": 600,
         "fps": 60
     },
 
@@ -11,7 +11,9 @@
         "move_up": 119,
         "move_down": 115,
         "move_left": 97,
-        "move_right": 100
+        "move_right": 100,
+        "rotate_left": 113,
+        "rotate_right": 101
     },
 
     "sound": {

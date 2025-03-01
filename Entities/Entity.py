@@ -1,8 +1,9 @@
 import arcade
 from settings.universalVariables import *
+from arcade.types import LRBT
 
 class Entity:
-    def __init__(self, x, y, name, description="", MOVEMENT_SPEED = 1, SPRITE_SCALE = [5,5], sprites=[], ANIMATION_SPEED = 1, action=None):
+    def __init__(self, x, y, name, description="", MOVEMENT_SPEED = 1, SPRITE_SCALE = [5,5], sprites=[], sprite_sheet=False, sprite_sheet_loc = LRBT(56, 64, 56, 64), ANIMATION_SPEED = 1, action=None):
         self.spriteList = []
 
         self.SPRITE_SCALE = SPRITE_SCALE
@@ -19,10 +20,18 @@ class Entity:
         self.action = action
 
         self.activeSprite = 0
-        if len(self.spriteList) > 0:
-            self.activeSprite = arcade.Sprite(self.spriteList[0], self.SPRITE_SCALE)
+
+        if sprite_sheet:
+            texture = arcade.load_spritesheet(sprites[0])
+            self.activeSprite = arcade.Sprite(texture.get_texture(sprite_sheet_loc), self.SPRITE_SCALE)
             self.activeSprite.center_x = x
             self.activeSprite.center_y = y
+        
+        else:
+            if len(self.spriteList) > 0:
+                self.activeSprite = arcade.Sprite(arcade.load_texture(self.spriteList[0]), self.SPRITE_SCALE)
+                self.activeSprite.center_x = x
+                self.activeSprite.center_y = y
 
     def getCollisionList(self, other):
         return arcade.check_for_collision_with_list(self.activeSprite, other)
@@ -68,15 +77,15 @@ class Entity:
         arcade.draw_sprite(self.activeSprite, pixelated=True)
 
     def update(self, delta):
-        self.timer += delta
-        if self.timer > self.ANIMATION_SPEED:
-            oldX = self.activeSprite.center_x
-            oldY = self.activeSprite.center_y
-            self.animationFrame += 1
-            if self.animationFrame >= len(self.spriteList):
-                self.animationFrame = 0
-            self.activeSprite.texture = self.spriteList[self.animationFrame]
-            self.timer = 0
+        # self.timer += delta
+        # if self.timer > self.ANIMATION_SPEED:
+        #     oldX = self.activeSprite.center_x
+        #     oldY = self.activeSprite.center_y
+        #     self.animationFrame += 1
+        #     if self.animationFrame >= len(self.spriteList):
+        #         self.animationFrame = 0
+        #     self.activeSprite.texture = self.spriteList[self.animationFrame]
+        #     self.timer = 0
         
         self.activeSprite.update(delta)
 

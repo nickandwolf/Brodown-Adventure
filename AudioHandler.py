@@ -18,7 +18,7 @@ class AudioHandler:
     def playSound(self, sound):
         self.sound_player = self.sounds[sound].play(SOUND_VOLUME)
 
-    def pauseMusic(self): #TODO: make this shit work
+    def pauseMusic(self):
         if self.music_player.playing:
             self.music_player.pause()
         else:
