@@ -234,8 +234,8 @@ class GameView(arcade.View):
 
 def main():
     window = GameWindow()
-    #window.show_view(DevIntroScreen())
-    window.show_view(GameView())
+    window.show_view(DevIntroScreen())
+    #window.show_view(GameView())
     arcade.run()
 
 if __name__ == "__main__":

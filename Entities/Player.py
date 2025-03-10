@@ -50,11 +50,12 @@ class Player(Entities.Entity.Entity):
             self.rotation -= 1
             if rotation < 0:
                 rotation = 3
-
         elif key == key_bindings["rotate_right"]:
             self.rotation += 1
             if rotation > 3:
                 rotation = 0
+        elif key == key_bindings["action"]:
+            pass
 
 
     def handleKeyRelease(self, key, modifiers):
@@ -82,3 +83,15 @@ class Player(Entities.Entity.Entity):
             self.activeSprite.bottom = 0
         elif self.activeSprite.top > GAME_HEIGHT-1:
             self.activeSprite.top = GAME_HEIGHT-1
+
+    def pickUpItem(self, item):
+        if len(self.inventory < 4):
+            self.inventory.append(item)
+            return True
+        return False
+
+    def dropItem(self, item):
+        if item in self.inventory:
+            self.inventory.remove(item)
+            return True
+        return False

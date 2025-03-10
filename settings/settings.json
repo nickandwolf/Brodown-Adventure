@@ -13,7 +13,8 @@
         "move_left": 97,
         "move_right": 100,
         "rotate_left": 113,
-        "rotate_right": 101
+        "rotate_right": 101,
+        "action": 32
     },
 
     "sound": {
